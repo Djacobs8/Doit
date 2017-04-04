@@ -9,10 +9,11 @@
 import UIKit
 // add to class the data source and delegate as before
 class TasksViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
+    
     @IBOutlet weak var tableView: UITableView!
     
     var tasks : [Task] = [] //empty array of type Task
+    var selectedIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,13 +25,13 @@ class TasksViewController: UIViewController, UITableViewDataSource, UITableViewD
         tableView.delegate = self
         
     }
-// how many rows
+    // how many rows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tasks.count
     }
- // what to return for said cell
+    // what to return for said cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell() //is the class and we're making an object of that class 
+        let cell = UITableViewCell() //is the class and we're making an object of that class
         let task = tasks[indexPath.row] //current task in order
         if task.important {
             cell.textLabel?.text = "❗️\(task.name)"
@@ -40,6 +41,14 @@ class TasksViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        selectedIndex = indexPath.row
+        let task = tasks[indexPath.row]
+        performSegue(withIdentifier: "selectTaskSegue", sender: task)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -60,16 +69,23 @@ class TasksViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         return [task1, task2, task3] //creating array of tasks, as a dummy list
     }
-
+    
     @IBAction func plusTapped(_ sender: Any) {
         performSegue(withIdentifier: "addSegue", sender: nil)
     } // give action to the button, and tie to the segue made in storyboard
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // giving  link back to this VC from createtaskVC
-        let nextVC = segue.destination as! CreateTaskViewController
-        nextVC.previousVC = self // creating a reference of its own type when going to the next VC so that VC can send info back
-        
+        if segue.identifier == "addSegue" {
+            let nextVC = segue.destination as! CreateTaskViewController
+            nextVC.previousVC = self // creating a reference of its own type when going to the next VC so that VC can send info back
+        }
+        if segue.identifier == "selectTaskSegue" {
+            let nextVC = segue.destination as! CompleteTaskViewController
+            nextVC.task = sender as! Task
+            nextVC.previousVC = self
+        }
+
     }
 }
 

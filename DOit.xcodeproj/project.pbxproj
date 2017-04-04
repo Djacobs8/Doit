@@ -15,6 +15,7 @@
 		B6AF9F431E9386690043A854 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6AF9F411E9386690043A854 /* LaunchScreen.storyboard */; };
 		B6AF9F4B1E938D730043A854 /* task.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AF9F4A1E938D730043A854 /* task.swift */; };
 		B6AF9F4D1E9406530043A854 /* CreateTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AF9F4C1E9406530043A854 /* CreateTaskViewController.swift */; };
+		B6AF9F4F1E9413890043A854 /* CompleteTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AF9F4E1E9413890043A854 /* CompleteTaskViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		B6AF9F441E9386690043A854 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B6AF9F4A1E938D730043A854 /* task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = task.swift; sourceTree = "<group>"; };
 		B6AF9F4C1E9406530043A854 /* CreateTaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTaskViewController.swift; sourceTree = "<group>"; };
+		B6AF9F4E1E9413890043A854 /* CompleteTaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompleteTaskViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				B6AF9F351E9386690043A854 /* AppDelegate.swift */,
 				B6AF9F371E9386690043A854 /* TasksViewController.swift */,
 				B6AF9F4C1E9406530043A854 /* CreateTaskViewController.swift */,
+				B6AF9F4E1E9413890043A854 /* CompleteTaskViewController.swift */,
 				B6AF9F4A1E938D730043A854 /* task.swift */,
 				B6AF9F391E9386690043A854 /* Main.storyboard */,
 				B6AF9F3F1E9386690043A854 /* Assets.xcassets */,
@@ -147,6 +150,7 @@
 			files = (
 				B6AF9F4B1E938D730043A854 /* task.swift in Sources */,
 				B6AF9F381E9386690043A854 /* TasksViewController.swift in Sources */,
+				B6AF9F4F1E9413890043A854 /* CompleteTaskViewController.swift in Sources */,
 				B6AF9F3E1E9386690043A854 /* DOit.xcdatamodeld in Sources */,
 				B6AF9F361E9386690043A854 /* AppDelegate.swift in Sources */,
 				B6AF9F4D1E9406530043A854 /* CreateTaskViewController.swift in Sources */,
