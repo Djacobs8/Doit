@@ -13,18 +13,24 @@ class TasksViewController: UIViewController, UITableViewDataSource, UITableViewD
     @IBOutlet weak var tableView: UITableView!
     
     var tasks : [Task] = [] //empty array of type Task
-    var selectedIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        tasks = makeTasks() //must be done above the table otherwise table will be made too damn soon
         
         tableView.dataSource = self // if doing this must go adjust class
         tableView.delegate = self
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        getTasks() // going and getting the tasks
+        //want to reload tableview
+        tableView.reloadData()
+        
+    }
+    
     // how many rows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tasks.count
@@ -34,9 +40,9 @@ class TasksViewController: UIViewController, UITableViewDataSource, UITableViewD
         let cell = UITableViewCell() //is the class and we're making an object of that class
         let task = tasks[indexPath.row] //current task in order
         if task.important {
-            cell.textLabel?.text = "❗️\(task.name)"
+            cell.textLabel?.text = "❗️\(task.name!)"
         } else {
-            cell.textLabel?.text = task.name //gives the cell that name
+            cell.textLabel?.text = task.name! //gives the cell that name
         }
         
         return cell
@@ -44,7 +50,6 @@ class TasksViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        selectedIndex = indexPath.row
         let task = tasks[indexPath.row]
         performSegue(withIdentifier: "selectTaskSegue", sender: task)
     }
@@ -53,7 +58,7 @@ class TasksViewController: UIViewController, UITableViewDataSource, UITableViewD
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+   /*
     func makeTasks () -> [Task] {
         let task1 = Task()
         task1.name = "Walk the dog"
@@ -68,22 +73,27 @@ class TasksViewController: UIViewController, UITableViewDataSource, UITableViewD
         task3.important = false
         
         return [task1, task2, task3] //creating array of tasks, as a dummy list
-    }
-    
+    }*/
+    // using core data. can't create objects in it to start
     @IBAction func plusTapped(_ sender: Any) {
         performSegue(withIdentifier: "addSegue", sender: nil)
     } // give action to the button, and tie to the segue made in storyboard
     
+    func getTasks() {
+         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        do{
+            tasks = try context.fetch(Task.fetchRequest()) as! [Task]
+        } catch{
+            print("OH SHIT OH SHIT")
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // giving  link back to this VC from createtaskVC
-        if segue.identifier == "addSegue" {
-            let nextVC = segue.destination as! CreateTaskViewController
-            nextVC.previousVC = self // creating a reference of its own type when going to the next VC so that VC can send info back
-        }
+        
         if segue.identifier == "selectTaskSegue" {
             let nextVC = segue.destination as! CompleteTaskViewController
-            nextVC.task = sender as! Task
-            nextVC.previousVC = self
+            nextVC.task = sender as? Task
         }
 
     }

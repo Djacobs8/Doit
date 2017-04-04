@@ -12,23 +12,25 @@ class CompleteTaskViewController: UIViewController {
 
     @IBOutlet weak var taskLabel: UILabel!
     
-    var task = Task()
+    var task : Task? = nil
     
-    var previousVC = TasksViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        if task.important {
-            taskLabel.text = "❗️\(task.name)"
+        if task!.important {
+            taskLabel.text = "❗️\(task!.name!)"
         } else {
-            taskLabel.text = task.name //gives the cell that name
+            taskLabel.text = task!.name! //gives the cell that name
         }
     }
 
     @IBAction func completeTapped(_ sender: Any) {
-        previousVC.tasks.remove(at: previousVC.selectedIndex)// deletes, no need for append as we aren't adding anything to the previous array
-        previousVC.tableView.reloadData() //refreshes that previous screen so the addition to the array is seen
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        
+        context.delete(task!)
+        (UIApplication.shared.delegate as! AppDelegate).saveContext()// delete then save before popping back 
+        
         navigationController!.popViewController(animated: true) // after the button is hit it pops back to the previous screen via animation
     }
     
